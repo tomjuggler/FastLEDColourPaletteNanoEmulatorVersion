@@ -3,7 +3,7 @@
 #define DATA_PIN 2 //D2 for D1Mini, 2 for ESP-01
 #define CLOCK_PIN 0 //D1 for D1Mini, 0 for ESP-01
 
-#define LED_PIN     D6
+#define LED_PIN     D6 //for ws2812
 #define NUM_LEDS    37
 #define BRIGHTNESS  20 //change to 200 for shows!!!!
 #define LED_TYPE    APA102
@@ -47,8 +47,10 @@ int maxStartIndex = 70;
 int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
-int stripeVar = 1;
+int stripeVar = 5;
 boolean emulated = false;
+
+
 /****Variables needed for sending to Processing. */
 uint16_t sendDelay = 10;    // [Milliseconds] To slow stuff down if needed.
 boolean testing = false;  // Default is false. [Ok to change for testing.]
@@ -59,8 +61,8 @@ boolean linkedUp = true;  // Initially set linkup status false. [Do Not change.]
 /****End of variables needed for sending Processing. */
 
 void setup() {
-  delay( 3000 ); // power-up safety delay
-  //Serial.begin(9600);
+//  delay( 3000 ); // power-up safety delay - for new hardware setups and such
+ 
   FastLED.addLeds<APA102, DATA_PIN, CLOCK_PIN, COLOR_ORDER>(leds, NUM_LEDS); //DATA_RATE_MHZ(8)
   //  FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
   FastLED.setBrightness(  BRIGHTNESS );
