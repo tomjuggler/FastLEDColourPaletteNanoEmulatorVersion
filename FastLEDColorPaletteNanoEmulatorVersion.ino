@@ -1,7 +1,7 @@
 #include <FastLED.h>
 //apa102:
-#define DATA_PIN D2 //D2 for D1Mini, 2 for ESP-01
-#define CLOCK_PIN D1 //D1 for D1Mini, 0 for ESP-01
+#define DATA_PIN 2 //D2 for D1Mini, 2 for ESP-01
+#define CLOCK_PIN 0 //D1 for D1Mini, 0 for ESP-01
 
 #define LED_PIN     D6
 #define NUM_LEDS    37
@@ -48,6 +48,7 @@ int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
 int stripeVar = 1;
+boolean emulated = false;
 /****Variables needed for sending to Processing. */
 uint16_t sendDelay = 10;    // [Milliseconds] To slow stuff down if needed.
 boolean testing = false;  // Default is false. [Ok to change for testing.]
@@ -56,7 +57,6 @@ boolean testing = false;  // Default is false. [Ok to change for testing.]
 
 boolean linkedUp = true;  // Initially set linkup status false. [Do Not change.]
 /****End of variables needed for sending Processing. */
-
 
 void setup() {
   delay( 3000 ); // power-up safety delay
@@ -70,12 +70,13 @@ void setup() {
 
   /****Stuff needed in setup() section for sending to Processing. */
   Serial.begin(115200);  // Allows serial output.
-  while (!Serial) {
-    ;  // Wait for serial connection. Only needed for Leonardo board.
-  }
+  if(emulated){
+//  while (!Serial) {
+//    ;  // Wait for serial connection. Only needed for Leonardo board.
+//  }
   firstContact();  // Connect with Processing. Hello, is anyone out there?
   /****End of stuff to put in your setup() section for Processing. */
-
+  }
 }
 
 
@@ -83,7 +84,7 @@ void loop()
 {
   
   // This tests if serial is connected.  Needed for sending to Processing. //
-  if (linkedUp == true) {  // Check to see if connected with Processing. //
+//  if (linkedUp == true) {  // Check to see if connected with Processing. //
 /*
 //    if (setting == 1) { //updown and diagonal stripes changing colour according to ChangePalettePeriodically3()
 
@@ -115,8 +116,11 @@ void loop()
 
         //add_glitter();
 
-        FastLED.show(); SendToProcessing();
+        FastLED.show();
+        if(emulated){
+        SendToProcessing();
         FastLED.delay(1000 / UPDATES_PER_SECOND);
+      }
         
 //          motionSpeed++;
 //          if(motionSpeed == 10){
@@ -150,8 +154,11 @@ void loop()
         }
         //add_glitter();
         //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
-        FastLED.show(); SendToProcessing();
+        FastLED.show(); 
+      if(emulated){
+        SendToProcessing();
         FastLED.delay(1000 / UPDATES_PER_SECOND);
+      }
        
 //          motionSpeed++;
 //          if(motionSpeed == 10){
@@ -195,21 +202,25 @@ void loop()
       ChangeStripesPeriodically();
       
       stripeIndex2 = stripeIndex2 + 1;
-      FillPatternStripesFromPaletteColors( stripeIndex2, stripeVar);
+      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
       //Serial.println(startIndex);
+//      int happy = random(1, 37);
       if (stripeIndex2 > NUM_LEDS) {
         stripeIndex2 = 0;
       }
       stripeVar = -stripeVar;
       //add_glitter();
       //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
-      FastLED.show(); SendToProcessing();
-      FastLED.delay(1000 / UPDATES_PER_SECOND);
+      FastLED.show(); 
+      if(emulated){
+        SendToProcessing();
+        FastLED.delay(1000 / UPDATES_PER_SECOND);
+      }
 
 //    }//end else 3
 
     
-  }
+//  }
 }//end loop
 
 
