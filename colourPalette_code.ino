@@ -1,3 +1,58 @@
+
+
+void FillPatternStripesFromPaletteColors( uint8_t colorIndex, uint8_t var)
+{
+  uint8_t brightness = 255;
+  for ( int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = ColorFromPalette( currentPalette, colorIndex, brightness, currentBlending);
+    colorIndex = colorIndex + var; //change this to change pattern nicely!!
+  }
+}
+
+void ChangeStripesPeriodically()
+{
+  uint8_t secondHand = (millis() / 1000) % 60; //last number is number of seconds the whole thing lasts!
+  static uint8_t lastSecond = 99;
+
+  if ( lastSecond != secondHand) {
+    lastSecond = secondHand;
+    if ( secondHand == 1 )  {
+      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Yellow, CRGB::Black);
+    }
+    if ( secondHand == 10)  {
+      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Blue, CRGB::Black);
+    }
+    if ( secondHand == 20)  {
+      SetupVariablePalette(CRGB::Cyan, CRGB::Black, CRGB::Yellow, CRGB::Black);
+    }
+    if ( secondHand == 30)  {
+      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Green, CRGB::Black);
+    }
+    if ( secondHand == 40)  {
+      SetupVariablePalette(CRGB::Cyan, CRGB::Black, CRGB::Magenta, CRGB::Black);
+    }
+    if ( secondHand == 50)  {
+      SetupVariablePalette(CRGB::Green, CRGB::Black, CRGB::Blue, CRGB::Black);
+    }
+    if ( secondHand == 59)  {
+      setting++;
+      if (setting > 3) {
+        setting = 1;
+      }
+      stripeVar++;
+      if(stripeVar > 6){
+        stripeVar = 0; 
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
 void FillLEDsFromPaletteColors( uint8_t colorIndex)
 {
   uint8_t brightness = 255;
@@ -20,16 +75,7 @@ void FillStripesFromPaletteColors( uint8_t colorIndex)
 
 }
 
-void FillPatternStripesFromPaletteColors( uint8_t colorIndex, uint8_t var)
-{
-  uint8_t brightness = 255;
 
-  for ( int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = ColorFromPalette( currentPalette, colorIndex, brightness, currentBlending);
-    colorIndex = colorIndex + var; //change this to change pattern nicely!!
-  }
-
-}
 
 // There are several different palettes of colors demonstrated here.
 //
@@ -190,41 +236,8 @@ void ChangePalettePeriodically3()
   }
 }
 
-void ChangeStripesPeriodically()
-{
-  uint8_t secondHand = (millis() / 1000) % 60; //last number is number of seconds the whole thing lasts!
-  static uint8_t lastSecond = 99;
-
-  if ( lastSecond != secondHand) {
-    lastSecond = secondHand;
-    if ( secondHand == 1 )  {
-      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Yellow, CRGB::Black);
-    }
-    if ( secondHand == 10)  {
-      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Blue, CRGB::Black);
-    }
-    if ( secondHand == 20)  {
-      SetupVariablePalette(CRGB::Cyan, CRGB::Black, CRGB::Yellow, CRGB::Black);
-    }
-    if ( secondHand == 30)  {
-      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Green, CRGB::Black);
-    }
-    if ( secondHand == 40)  {
-      SetupVariablePalette(CRGB::Cyan, CRGB::Black, CRGB::Magenta, CRGB::Black);
-    }
-    if ( secondHand == 50)  {
-      SetupVariablePalette(CRGB::Green, CRGB::Black, CRGB::Blue, CRGB::Black);
-    }
-    if ( secondHand == 59)  {
-      setting++;
-      if (setting > 3) {
-        setting = 1;
-      }
-    }
 
 
-  }
-}
 
 
 //SetupRandomVariablePalette2(CRGB::Red, CRGB::Green, CRGB::Blue, CRGB::Magenta);

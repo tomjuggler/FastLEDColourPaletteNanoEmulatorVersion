@@ -47,7 +47,10 @@ int maxStartIndex = 70;
 int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
-int stripeVar = 5;
+int stripeVar = 0;
+
+
+
 boolean emulated = false;
 
 
@@ -201,16 +204,21 @@ void loop()
 //    else
 //    {
 
-      ChangeStripesPeriodically();
-      
+      ChangeStripesPeriodically();      
       stripeIndex2 = stripeIndex2 + 1;
       FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
+
+      
+      
+      
       //Serial.println(startIndex);
 //      int happy = random(1, 37);
       if (stripeIndex2 > NUM_LEDS) {
         stripeIndex2 = 0;
       }
       stripeVar = -stripeVar;
+
+      
       //add_glitter();
       //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
       FastLED.show(); 
