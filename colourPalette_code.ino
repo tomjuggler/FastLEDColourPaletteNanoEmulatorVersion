@@ -34,13 +34,13 @@ void ChangeStripesPeriodically()
     if ( secondHand == 50)  {
       SetupVariablePalette(CRGB::Green, CRGB::Black, CRGB::Blue, CRGB::Black);
     }
-    if ( secondHand == 59)  {
+    if ( secondHand == 5)  {
       setting++;
       if (setting > 3) {
         setting = 1;
       }
-      stripeVar++;
-      if(stripeVar > 6){
+//      stripeVar++;
+      if(stripeVar > 36){
         stripeVar = 0; 
       }
     }
@@ -445,4 +445,3 @@ const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
 // palette to Green (0,255,0) and Blue (0,0,255), and then retrieved
 // the first sixteen entries from the virtual palette (of 256), you'd get
 // Green, followed by a smooth gradient from green-to-blue, and then Blue.
-

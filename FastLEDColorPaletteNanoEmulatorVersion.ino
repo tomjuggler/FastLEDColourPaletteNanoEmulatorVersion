@@ -47,11 +47,11 @@ int maxStartIndex = 70;
 int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
-int stripeVar = 0;
+int stripeVar = 3;
 
 
 
-boolean emulated = false;
+boolean emulated = true;
 
 
 /****Variables needed for sending to Processing. */
@@ -203,22 +203,40 @@ void loop()
 //    }//end if(setting == 2)
 //    else
 //    {
+//if(setting == 1){
+
 
       ChangeStripesPeriodically();      
       stripeIndex2 = stripeIndex2 + 1;
       FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
-
-      
-      
+     
       
       //Serial.println(startIndex);
 //      int happy = random(1, 37);
-      if (stripeIndex2 > NUM_LEDS) {
+      if (stripeIndex2 > NUM_LEDS*2) {
         stripeIndex2 = 0;
+//        stripeVar ++;
+//        stripeVar = random8(0, 37);
       }
       stripeVar = -stripeVar;
 
-      
+//}else{
+//  ChangeStripesPeriodically();      
+//      stripeIndex2 = stripeIndex2 - 1;
+////      stripeVar = random8(0, 37);
+//      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
+//
+//      
+//      
+//      
+//      //Serial.println(startIndex);
+////      int happy = random(1, 37);
+//      if (stripeIndex2 > -NUM_LEDS) {
+//        stripeVar = random8(0, 37);
+//        stripeIndex2 = NUM_LEDS;
+//      }
+//      stripeVar = -stripeVar;
+//}
       //add_glitter();
       //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
       FastLED.show(); 
@@ -315,4 +333,3 @@ void SendToProcessing() {
 // palette to Green (0,255,0) and Blue (0,0,255), and then retrieved
 // the first sixteen entries from the virtual palette (of 256), you'd get
 // Green, followed by a smooth gradient from green-to-blue, and then Blue.
-
