@@ -47,7 +47,7 @@ int maxStartIndex = 70;
 int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
-int stripeVar = 3;
+int stripeVar = 2;
 
 
 
