@@ -15,30 +15,12 @@ boolean lines = true;
 
 #define UPDATES_PER_SECOND 30000
 
-// This example shows several ways to set up and use 'palettes' of colors
-// with FastLED.
-//
-// These compact palettes provide an easy way to re-colorize your
-// animation on the fly, quickly, easily, and with low overhead.
-//
-// USING palettes is MUCH simpler in practice than in theory, so first just
-// run this sketch, and watch the pretty lights as you then read through
-// the code.  Although this sketch has eight (or more) different color schemes,
-// the entire sketch compiles down to about 6.5K on AVR.
-//
-// FastLED provides a few pre-configured color palettes, and makes it
-// extremely easy to make up your own color schemes with palettes.
-//
-// Some notes on the more abstract 'theory and practice' of
-// FastLED compact palettes are at the bottom of this file.
+
 
 
 
 CRGBPalette16 currentPalette;
 TBlendType    currentBlending;
-
-extern CRGBPalette16 myRedWhiteBluePalette;
-extern const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM;
 
 int paletteVar = 1;
 
@@ -47,7 +29,7 @@ int maxStartIndex = 70;
 int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
-int stripeVar = 2;
+int stripeVar = 4;
 boolean backwards = false;
 
 
@@ -64,208 +46,54 @@ boolean linkedUp = true;  // Initially set linkup status false. [Do Not change.]
 /****End of variables needed for sending Processing. */
 
 void setup() {
-//  delay( 3000 ); // power-up safety delay - for new hardware setups and such
- 
+  //  delay( 3000 ); // power-up safety delay - for new hardware setups and such
+
   FastLED.addLeds<APA102, DATA_PIN, CLOCK_PIN, COLOR_ORDER>(leds, NUM_LEDS); //DATA_RATE_MHZ(8)
   //  FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
   FastLED.setBrightness(  BRIGHTNESS );
 
-  //currentPalette = RainbowStripeColors_p;
   currentBlending = NOBLEND;
 
   /****Stuff needed in setup() section for sending to Processing. */
   Serial.begin(115200);  // Allows serial output.
-  if(emulated){
-//  while (!Serial) {
-//    ;  // Wait for serial connection. Only needed for Leonardo board.
-//  }
-  firstContact();  // Connect with Processing. Hello, is anyone out there?
-  /****End of stuff to put in your setup() section for Processing. */
+  if (emulated) {
+    //  while (!Serial) {
+    //    ;  // Wait for serial connection. Only needed for Leonardo board.
+    //  }
+    firstContact();  // Connect with Processing. Hello, is anyone out there?
+    /****End of stuff to put in your setup() section for Processing. */
   }
 }
 
 
 void loop()
-{
-  
-  // This tests if serial is connected.  Needed for sending to Processing. //
-//  if (linkedUp == true) {  // Check to see if connected with Processing. //
-/*
-//    if (setting == 1) { //updown and diagonal stripes changing colour according to ChangePalettePeriodically3()
-
-      if (lines == false) { //toggled in ChangePalettePeriodically3()
-        //ChangePalettePeriodically2();
-//        ChangePaletteEveryTime();
-        //Serial.println(paletteVar);
-        //PaletteSetup();
-        //SetupVariablePalette(CRGB::Red, CRGB::Gray, CRGB::Blue, CRGB::Black);
-        //SetupRandomVariablePalette(CRGB::Red, CRGB::Gray, CRGB::Blue, CRGB::Black);
-        ChangePalettePeriodically3();
-        static uint8_t startIndex = 0;
-        if (upDown == true) {
-          startIndex = startIndex + motionSpeed; // motion speed 
-          FillLEDsFromPaletteColors( startIndex);
-          //Serial.println(startIndex);
-          if (startIndex == maxStartIndex) {
-            upDown = false;
-          }
-        }
-        else {
-          startIndex = startIndex - motionSpeed; // motion speed /
-          FillLEDsFromPaletteColors( startIndex);
-          //Serial.println(startIndex);
-          if (startIndex == minStartIndex) {
-            upDown = true;
-          }
-        }
-
-        //add_glitter();
-
-        FastLED.show();
-        if(emulated){
-        SendToProcessing();
-        FastLED.delay(1000 / UPDATES_PER_SECOND);
-      }
-        
-//          motionSpeed++;
-//          if(motionSpeed == 10){
-//          motionSpeed = 1;
-//          }
-//
-//          minStartIndex++;
-//          if(minStartIndex == 20){
-//          minStartIndex = 0;
-//          }
-//          maxStartIndex--;
-//          if(maxStartIndex == 30){
-//          maxStartIndex = 70;
-//          }
-        
-      }//end if(lines)
-      else {
-        //ChangePalettePeriodically2();
-        //ChangePaletteEveryTime();
-        //Serial.println(paletteVar);
-        //PaletteSetup();
-        //SetupVariablePalette(CRGB::Red, CRGB::Gray, CRGB::Blue, CRGB::Black);
-        //SetupRandomVariablePalette(CRGB::Red, CRGB::Gray, CRGB::Blue, CRGB::Black);
-        ChangePalettePeriodically3();
-        static uint8_t startIndex = 0;
-        startIndex = startIndex + motionSpeed; // motion speed 
-        FillLEDsFromPaletteColors( startIndex);
-        //Serial.println(startIndex);
-        if (startIndex == maxStartIndex) {
-          startIndex = 0;
-        }
-        //add_glitter();
-        //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
-        FastLED.show(); 
-      if(emulated){
-        SendToProcessing();
-        FastLED.delay(1000 / UPDATES_PER_SECOND);
-      }
-       
-//          motionSpeed++;
-//          if(motionSpeed == 10){
-//          motionSpeed = 1;
-//          }
-//
-//          minStartIndex++;
-//          if(minStartIndex == 20){
-//          minStartIndex = 0;
-//          }
-//          maxStartIndex--;
-//          if(maxStartIndex == 30){
-//          maxStartIndex = 70;
-//          }
-       
-
-      }//end else(lines)
-//    }//end if(setting ==1)
-*/
-
-//    else if (setting == 2) //full colour stripes on/off
-//    {
-/*
-      ChangeStripesPeriodically();
-      static uint8_t stripeIndex = 0;
-      stripeIndex = stripeIndex + 1;
-      FillStripesFromPaletteColors( stripeIndex);
-      //Serial.println(startIndex);
-      if (stripeIndex > 15) {
-        stripeIndex = 0;
-      }
-      //add_glitter();
-      //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
-      FastLED.show(); SendToProcessing();
-      FastLED.delay(1000 / UPDATES_PER_SECOND);
-      */
-//    }//end if(setting == 2)
-//    else
-//    {
-//if(setting == 1){
-
-EVERY_N_SECONDS(2) {
-//    backwards = !backwards;
+{  
+  ChangeStripesPeriodically(); //or try built in palette:  // currentPalette = RainbowStripeColors_p; //super awesome rainbows!
+  stripeIndex2 = stripeIndex2 + PI;
+  if (!backwards) {
+    FillHalf(stripeIndex2, stripeVar, 0, 18);
+  } else {
+    FillHalfBackwards(stripeIndex2, stripeVar, 0, 18);
   }
-  
 
+  if (stripeIndex2 > NUM_LEDS * 4) {
+    stripeIndex2 = 0;
+    backwards = !backwards;
 
-      ChangeStripesPeriodically();      
-      stripeIndex2 = stripeIndex2 + PI;
-//      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
-if(!backwards){
-FillHalf(stripeIndex2, stripeVar, 0, 18);
-} else{
-  FillHalfBackwards(stripeIndex2, stripeVar, 0, 18);
-}
-     
-      
-      //Serial.println(startIndex);
-//      int happy = random(1, 37);
-      if (stripeIndex2 > NUM_LEDS*4) {
-        stripeIndex2 = 0;
-        backwards = !backwards;
-//        stripeVar ++;
-//        stripeVar = random8(0, 37);
-      }
-      stripeVar = -stripeVar;
-      if(!backwards){
-      FillHalf(stripeIndex2, stripeVar, 18, NUM_LEDS);
-      }else{
-        FillHalfBackwards(stripeIndex2, stripeVar, 18, NUM_LEDS);
-      }
-//      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
-      stripeVar = -stripeVar;
-//}else{
-//  ChangeStripesPeriodically();      
-//      stripeIndex2 = stripeIndex2 - 1;
-////      stripeVar = random8(0, 37);
-//      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
-//
-//      
-//      
-//      
-//      //Serial.println(startIndex);
-////      int happy = random(1, 37);
-//      if (stripeIndex2 > -NUM_LEDS) {
-//        stripeVar = random8(0, 37);
-//        stripeIndex2 = NUM_LEDS;
-//      }
-//      stripeVar = -stripeVar;
-//}
-      //add_glitter();
-      //add_glitter from https://gist.github.com/kriegsman/ccffc81a74bc03636ce1
-      FastLED.show(); 
-      if(emulated){
-        SendToProcessing();
-        FastLED.delay(1000 / UPDATES_PER_SECOND);
-      }
+  }
+  stripeVar = -stripeVar;
+  if (!backwards) {
+    FillHalf(stripeIndex2, stripeVar, 18, NUM_LEDS);
+  } else {
+    FillHalfBackwards(stripeIndex2, stripeVar, 18, NUM_LEDS);
+  }
+  stripeVar = -stripeVar;
+  FastLED.show();
+  if (emulated) {
+    SendToProcessing();
+    FastLED.delay(1000 / UPDATES_PER_SECOND);
+  }
 
-//    }//end else 3
-
-    
-//  }
 }//end loop
 
 
@@ -273,8 +101,7 @@ FillHalf(stripeIndex2, stripeVar, 0, 18);
 
 
 /****The below two functions are needed for sending to Processing. */
-// Copy from here to the bottom.
-//--------------------
+
 // Waits for Processing to respond and then sends the number of pixels.
 void firstContact() {
   uint16_t nLEDS = NUM_LEDS;  // Number to send to Processing.  (Allows up to 65,535 pixels)
@@ -327,26 +154,3 @@ void SendToProcessing() {
 
 //--------------------
 /****End of the functions needed for sending to Processing.*/
-
-
-// Additionl notes on FastLED compact palettes:
-//
-// Normally, in computer graphics, the palette (or "color lookup table")
-// has 256 entries, each containing a specific 24-bit RGB color.  You can then
-// index into the color palette using a simple 8-bit (one byte) value.
-// A 256-entry color palette takes up 768 bytes of RAM, which on Arduino
-// is quite possibly "too many" bytes.
-//
-// FastLED does offer traditional 256-element palettes, for setups that
-// can afford the 768-byte cost in RAM.
-//
-// However, FastLED also offers a compact alternative.  FastLED offers
-// palettes that store 16 distinct entries, but can be accessed AS IF
-// they actually have 256 entries; this is accomplished by interpolating
-// between the 16 explicit entries to create fifteen intermediate palette
-// entries between each pair.
-//
-// So for example, if you set the first two explicit entries of a compact
-// palette to Green (0,255,0) and Blue (0,0,255), and then retrieved
-// the first sixteen entries from the virtual palette (of 256), you'd get
-// Green, followed by a smooth gradient from green-to-blue, and then Blue.
