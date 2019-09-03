@@ -48,7 +48,7 @@ int minStartIndex = 0;
 volatile int setting = 2;
 int stripeIndex2 = 0;
 int stripeVar = 2;
-
+boolean backwards = false;
 
 
 boolean emulated = true;
@@ -205,22 +205,36 @@ void loop()
 //    {
 //if(setting == 1){
 
+EVERY_N_SECONDS(2) {
+//    backwards = !backwards;
+  }
+  
+
 
       ChangeStripesPeriodically();      
       stripeIndex2 = stripeIndex2 + 1;
 //      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
+if(!backwards){
 FillHalf(stripeIndex2, stripeVar, 0, 18);
+} else{
+  FillHalfBackwards(stripeIndex2, stripeVar, 0, 18);
+}
      
       
       //Serial.println(startIndex);
 //      int happy = random(1, 37);
       if (stripeIndex2 > NUM_LEDS*2) {
         stripeIndex2 = 0;
+        backwards = !backwards;
 //        stripeVar ++;
 //        stripeVar = random8(0, 37);
       }
       stripeVar = -stripeVar;
+      if(!backwards){
       FillHalf(stripeIndex2, stripeVar, 18, NUM_LEDS);
+      }else{
+        FillHalfBackwards(stripeIndex2, stripeVar, 18, NUM_LEDS);
+      }
 //      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
       stripeVar = -stripeVar;
 //}else{
