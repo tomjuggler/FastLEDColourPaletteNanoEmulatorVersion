@@ -223,7 +223,7 @@ FillHalf(stripeIndex2, stripeVar, 0, 18);
       
       //Serial.println(startIndex);
 //      int happy = random(1, 37);
-      if (stripeIndex2 > NUM_LEDS*2) {
+      if (stripeIndex2 > NUM_LEDS*4) {
         stripeIndex2 = 0;
         backwards = !backwards;
 //        stripeVar ++;
