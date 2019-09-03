@@ -68,8 +68,11 @@ void setup() {
 
 void loop()
 {  
+  EVERY_N_SECONDS(5) {
+    //so something here?
+  }
   ChangeStripesPeriodically(); //or try built in palette:  // currentPalette = RainbowStripeColors_p; //super awesome rainbows!
-  stripeIndex2 = stripeIndex2 + PI;
+  stripeIndex2 = stripeIndex2 + PI*2;
   if (!backwards) {
     FillHalf(stripeIndex2, stripeVar, 0, 18);
   } else {

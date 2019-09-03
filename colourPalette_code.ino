@@ -52,13 +52,9 @@ void ChangeStripesPeriodically()
       SetupVariablePalette(CRGB::Green, CRGB::Black, CRGB::Blue, CRGB::Black);
     }
     if ( secondHand == 5)  {
-//      setting++;
-//      if (setting > 3) {
-//        setting = 1;
-//      }
-//      stripeVar++; //this got the pattern to sync somehow...?
-//      if (stripeVar > NUM_LEDS) {
-//        stripeVar = 0;
+//      stripeVar+=4; 
+//      if (stripeVar > 12) {
+//        stripeVar = 4;
 //      }
     }
   }
