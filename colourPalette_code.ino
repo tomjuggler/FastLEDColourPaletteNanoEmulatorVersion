@@ -1,4 +1,11 @@
-
+void FillHalf( uint8_t colorIndex, uint8_t var, int start, int finish)
+{
+  uint8_t brightness = 255;
+  for ( int i = start; i < finish; i++) {
+    leds[i] = ColorFromPalette( currentPalette, colorIndex, brightness, currentBlending);
+    colorIndex = colorIndex + var; //change this to change pattern nicely!!
+  }
+}
 
 void FillPatternStripesFromPaletteColors( uint8_t colorIndex, uint8_t var)
 {
@@ -17,7 +24,8 @@ void ChangeStripesPeriodically()
   if ( lastSecond != secondHand) {
     lastSecond = secondHand;
     if ( secondHand == 1 )  {
-      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Yellow, CRGB::Black);
+//      SetupVariablePalette6(CRGB::Red, CRGB::Green, CRGB::Black, CRGB::Red, CRGB::Black, CRGB::Blue);
+      SetupVariablePalette(CRGB::Black, CRGB::Blue, CRGB::Black, CRGB::Green);
     }
     if ( secondHand == 10)  {
       SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Blue, CRGB::Black);

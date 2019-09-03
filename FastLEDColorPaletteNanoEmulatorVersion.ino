@@ -208,7 +208,8 @@ void loop()
 
       ChangeStripesPeriodically();      
       stripeIndex2 = stripeIndex2 + 1;
-      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
+//      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
+FillHalf(stripeIndex2, stripeVar, 0, 18);
      
       
       //Serial.println(startIndex);
@@ -219,7 +220,9 @@ void loop()
 //        stripeVar = random8(0, 37);
       }
       stripeVar = -stripeVar;
-
+      FillHalf(stripeIndex2, stripeVar, 18, NUM_LEDS);
+//      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
+      stripeVar = -stripeVar;
 //}else{
 //  ChangeStripesPeriodically();      
 //      stripeIndex2 = stripeIndex2 - 1;
@@ -290,9 +293,9 @@ void SendToProcessing() {
     Serial.println("-------------------------------------------------------");
     for (uint16_t d = 0; d < NUM_LEDS; d++) {
       Serial.print("p: "); Serial.print(d);
-      Serial.print("\tr: "); Serial.print(leds[d].r);
-      Serial.print("\tg: "); Serial.print(leds[d].g);
-      Serial.print("\tb: "); Serial.println(leds[d].b);
+      Serial.print("\tr: "); Serial.print(leds[d].g);
+      Serial.print("\tg: "); Serial.print(leds[d].b);
+      Serial.print("\tb: "); Serial.println(leds[d].r);
     }
     Serial.println(" ");
     delay(500);  // Add some extra delay while testing.
@@ -300,9 +303,9 @@ void SendToProcessing() {
   else {  // Send ALL the pixel data to Processing!
     for (uint16_t d = 0; d < NUM_LEDS; d++) {
       Serial.write(d);          // Pixel number
-      Serial.write(leds[d].r);  // Red channel data
-      Serial.write(leds[d].g);  // Green channel data
-      Serial.write(leds[d].b);  // Blue channel data
+      Serial.write(leds[d].g);  // Red channel data
+      Serial.write(leds[d].b);  // Green channel data
+      Serial.write(leds[d].r);  // Blue channel data
     }
     delay(sendDelay);  // Delay to slow things down if needed.
   }
