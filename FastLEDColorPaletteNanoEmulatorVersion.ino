@@ -212,7 +212,7 @@ EVERY_N_SECONDS(2) {
 
 
       ChangeStripesPeriodically();      
-      stripeIndex2 = stripeIndex2 + 1;
+      stripeIndex2 = stripeIndex2 + PI;
 //      FillPatternStripesFromPaletteColors(stripeIndex2, stripeVar);
 if(!backwards){
 FillHalf(stripeIndex2, stripeVar, 0, 18);

@@ -45,7 +45,7 @@ void ChangeStripesPeriodically()
       SetupVariablePalette(CRGB::Cyan, CRGB::Black, CRGB::Yellow, CRGB::Black);
     }
     if ( secondHand == 30)  {
-      SetupVariablePalette(CRGB::Red, CRGB::Black, CRGB::Green, CRGB::Black);
+      SetupVariablePalette(CRGB::Magenta, CRGB::Black, CRGB::Green, CRGB::Black); //was red and green but my screen won't show it now...
     }
     if ( secondHand == 40)  {
       SetupVariablePalette(CRGB::Cyan, CRGB::Black, CRGB::Magenta, CRGB::Black);
