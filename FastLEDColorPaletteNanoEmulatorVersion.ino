@@ -4,7 +4,7 @@
 #define CLOCK_PIN 0 //D1 for D1Mini, 0 for ESP-01
 
 #define LED_PIN     D6 //for ws2812
-#define NUM_LEDS    37
+#define NUM_LEDS    36
 #define BRIGHTNESS  20 //change to 200 for shows!!!!
 #define LED_TYPE    APA102
 #define COLOR_ORDER GRB
